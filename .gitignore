@@ -50,3 +50,6 @@ pkg
 
 # For Eclipse
 .project
+
+# Ignore Gemfile.lock for switching between Ruby & JRuby
+Gemfile.lock
