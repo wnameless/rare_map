@@ -14,6 +14,6 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2012 WMW. See LICENSE.txt for
+Copyright (c) 2012 Wei-Ming Wu. See LICENSE.txt for
 further details.
 

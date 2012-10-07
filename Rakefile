@@ -2,6 +2,8 @@
 
 require 'rubygems'
 require 'bundler'
+require 'jeweler'
+require './lib/rare_map/version.rb'
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -16,12 +18,14 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "rare_map"
   gem.homepage = "http://github.com/wnameless/rare_map"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.license = "Apache License, Version 2.0"
+  gem.summary = %Q{RelationDB-ActiveRecord Mapper}
+  gem.description = %Q{Translate legacy db to ActiveRecord models}
   gem.email = "wnameless@gmail.com"
-  gem.authors = ["WMW"]
+  gem.authors = ["Wei-Ming Wu"]
   # dependencies defined in Gemfile
+  gem.files = Dir.glob('lib/**/*.rb')
+  gem.version = RareMap::Version::STRING
 end
 Jeweler::RubygemsDotOrgTasks.new
 
