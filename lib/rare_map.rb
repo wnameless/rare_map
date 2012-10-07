@@ -14,7 +14,11 @@ class RareMap
     info = {}
     
     databases = DatabaseToSchemaBuilder.build
-    databases.each do |group_name, tables|  
+    databases.each do |group_name, tables|
+      [:foreign_key, :alias, :primary_key].each do |sym|
+        opt[sym] ||= {}
+        opt[sym][group_name] ||= {}
+      end
       foreign_keys = opt[:foreign_key][group_name]
       aliases = opt[:alias][group_name]
       primary_keys = opt[:primary_key][group_name]
