@@ -2,9 +2,9 @@ class RareMap
   module Version
     MAJOR = 0
     MINOR = 9
-    PATCH = 5
-    #BUILD = 'beta'
+    PATCH = 6
+    BUILD = 'beta'
 
-    STRING = [MAJOR, MINOR, PATCH].compact.join('.')
+    STRING = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
   end
 end
