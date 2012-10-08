@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rare_map"
-  s.version = "0.9.6.beta"
+  s.version = "0.9.7"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wei-Ming Wu"]
-  s.date = "2012-10-07"
+  s.date = "2012-10-08"
   s.description = "Translate legacy db to ActiveRecord models"
   s.email = "wnameless@gmail.com"
   s.extra_rdoc_files = [
