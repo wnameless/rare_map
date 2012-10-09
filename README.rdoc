@@ -1,6 +1,69 @@
 = rare_map
 
-Description goes here.
+Relational DB to ActiveRecord models Mapper
+
+* Installation:
+
+   gem install rare_map
+
+== Basic RareMap use
+
+Set up your legacay db under your Rails applicaiton
+
+*  database.yml
+
+    mylegacy_db1:
+      adapter: sqlite3
+      database: db/db1.sqlite3
+
+    mylegacy_db2:
+      adapter: sqlite3
+      database: db/db2/sqlite3
+
+    hislegacy_db1:
+      adapter: sqlite3
+      database: db/db1.sqlite3
+
+"mylegacy" is treated as a group name.
+
+You MUST give all your legacy databases a group name.
+
+The associations of databases with the same group name will be built together.
+
+
+* Create a {RAILS_ROOT}/demo.rb file with following content under your Rails application
+
+   RareMap.mapping
+
+* Under terminal
+
+   ruby demo.rb
+
+* Add following line to your config/application.rb
+
+   config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
+
+== Advanced RareMap use
+
+If the foreign key of your legacy db is not end with '_id', you can change it manually.
+
+  foreign_keys = { :mylegacy => 'id', :hislegacy => 'id' }
+
+If the foreign key is not started with regular table names, you can create aliases for them.
+
+  aliases = { :mylegacy => { :pclid => :protocol, personid => people }, :hislegacy => { :measid => measurement } }
+
+Some of the databases like Oracle won't show the primary key on the dump of schema. If your primary key of a table is not 'id' and it didn't show the schema either. You can specify your special primary key beside 'id' if you want.
+
+  primary_keys = { :mylegacy => { :table1 => 'table1id' }, :hislegacy => { :table2 => 'table2id' } }
+
+When you using the RareMap
+
+  info = RareMap.mapping(:foreign_key => foreign_keys, :alias => aliases, :primary_key => primary_keys)
+
+[info]
+It contains all details of your tables.
+
 
 == Contributing to rare_map
  
