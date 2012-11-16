@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wei-Ming Wu"]
-  s.date = "2012-10-08"
+  s.date = "2012-11-16"
   s.description = "Translate legacy db to ActiveRecord models"
   s.email = "wnameless@gmail.com"
   s.extra_rdoc_files = [
