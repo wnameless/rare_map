@@ -42,10 +42,11 @@ module RareMap
     end
     
     def primary_key
+      return @primary_key if @primary_key
       return 'id' if @id
       
       candidates = @columns.find_all { |col| col.unique }.map { |col| col.name }
-      return @primary_key if candidates.include? @primary_key
+      # return @primary_key if candidates.include? @primary_key
       return 'id' if candidates.include? 'id'
       candidates.find { |c| c =~ eval("/^#{@name}.*id$/") } ||
       candidates.find { |c| c =~ eval("/^#{singularize}.*id$/") } ||
