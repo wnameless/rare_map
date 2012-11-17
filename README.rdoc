@@ -21,11 +21,11 @@ Add following lines to config/database.yml of rails
 *  database.yml
 
     rare_map:
-      legacy_db:
+      legacy_db1:
         adapter: sqlite3
         database: db/db1.sqlite3
 
-      your_db:
+      legacy_db2:
         adapter: mysql2
         host: localhost
         database: db_name
