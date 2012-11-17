@@ -1,22 +1,22 @@
-module RailsLocator
-  
- def self.locate(level = 5)
-    rails_dirs = ['app', 'config', 'db', 'doc', 'lib']
-    
-    level.times do |i|
-      found = true
-      path = ''
+module RareMap
+  module RailsLocator
+   def locate_rails_root(depth = 5)
+      rails_dirs = ['app', 'config', 'db', 'lib', 'log', 'public', 'script']
       
-      i.times { path += '../' }
-      
-      rails_dirs.each do |dir|
-        found = false unless Dir.exist?(path + dir)
+      depth.times do |level|
+        found = true
+        path = ''
+        
+        level.times { path << '../' }
+        
+        rails_dirs.each do |dir|
+          found = false unless Dir.exist?(path + dir)
+        end
+        
+        return path if found
       end
       
-      return path if found
+      nil
     end
-    
-    nil
   end
-  
 end

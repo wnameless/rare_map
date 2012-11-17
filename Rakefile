@@ -19,13 +19,14 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rare_map"
   gem.homepage = "http://github.com/wnameless/rare_map"
   gem.license = "Apache License, Version 2.0"
-  gem.summary = %Q{RelationDB-ActiveRecord Mapper}
-  gem.description = %Q{Translate legacy db to ActiveRecord models}
+  gem.summary = "rare_map-#{gem.version}"
+  gem.description = %Q{Relational db to ActiveREcord models MAPper}
   gem.email = "wnameless@gmail.com"
   gem.authors = ["Wei-Ming Wu"]
   # dependencies defined in Gemfile
   gem.files = Dir.glob('lib/**/*.rb')
   gem.version = RareMap::Version::STRING
+  gem.executables = ['raremap']
 end
 Jeweler::RubygemsDotOrgTasks.new
 
