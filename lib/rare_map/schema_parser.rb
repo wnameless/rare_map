@@ -10,7 +10,8 @@ module RareMap
         when /^create_table/
           name = line.match(/create_table\s+['"]([^'"]+)['"]/)[1]
           id = line.match(/:id\s*=>\s*false/) ? false : true
-          primary_key = pk[1] if (pk = line.match(/:primary_key\s*=>\s*['"](.+)['"]/))
+          pk = line.match(/:primary_key\s*=>\s*['"](.+)['"]/)
+          primary_key = pk[1] if pk
           tables << Table.new(name, :id => id, :primary_key => primary_key)
         when /^t\./
           name = line.match(/t\.\w+\s+['"]([^'"]+)['"]/)[1]
