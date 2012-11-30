@@ -63,14 +63,19 @@ module RareMap
     end
     
     def match_foreign_key(column)
-      if column.references == @name || ["#{@name}_#{fk_suffix}",
-                                        "#{@name}#{fk_suffix}",
-                                        "#{singularize}_#{fk_suffix}",
-                                        "#{singularize}#{fk_suffix}",
-                                        "#{pluralize}_#{fk_suffix}",
-                                        "#{pluralize}#{fk_suffix}"].include?(column.name)
+      if column.references == @name || foreign_keys.include?(column.name)
         @name if primary_key
       end
+    end
+    
+    def match_foreign_key_by_primary_key(pk)
+      @name if foreign_keys.include?(pk) && primary_key
+    end
+    
+    private
+    def foreign_keys
+      ["#{@name}_#{fk_suffix}",      "#{@name}#{fk_suffix}",      "#{singularize}_#{fk_suffix}",
+       "#{singularize}#{fk_suffix}", "#{pluralize}_#{fk_suffix}", "#{pluralize}#{fk_suffix}"]
     end
   end
   

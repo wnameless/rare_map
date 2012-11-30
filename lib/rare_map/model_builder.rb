@@ -31,12 +31,17 @@ module RareMap
       models.each do |model|
         group_models = models.select { |m| m.group == model.group && m.default_id == model.default_id }
         
-        model.table.columns.each do |col|
-          group_models.each do |gm|
+        group_models.each do |gm|
+          model.table.columns.each do |col|
             if gm.table.match_foreign_key(col) && model != gm
               model.relations << Relation.new(:belongs_to, col.name, gm.table.name)
               gm.relations << Relation.new(col.unique? ? :has_one : :has_many, col.name, model.table.name)
             end
+          end
+          
+          if gm.table.match_foreign_key_by_primary_key(model.table.primary_key) && model != gm
+            model.relations << Relation.new(:belongs_to, model.table.primary_key, gm.table.name)
+            gm.relations << Relation.new(:has_one, model.table.primary_key, model.table.name)
           end
         end
       end
