@@ -47,16 +47,18 @@ module RareMap
       end
       
       models.each do |model|
-        group_models = models.select { |m| m.group == model.group && m.default_id == model.default_id }
-        
         model.relations.each do |rel_from|
           model.relations.each do |rel_to|
             if rel_from != rel_to &&
                rel_from.type == :belongs_to &&
                rel_to.type == :belongs_to &&
                rel_from.table != rel_to.table
-              model_from = models.find { |m| m.table.name == rel_from.table }
-              model_to = models.find { |m| m.table.name == rel_to.table }
+              model_from = models.find { |m| m.table.name == rel_from.table &&
+                                             m.group      == model.group &&
+                                             m.default_id == model.default_id }
+              model_to = models.find { |m| m.table.name == rel_to.table &&
+                                           m.group      == model.group &&
+                                           m.default_id == model.default_id }
               model_from.relations << Relation.new(:has_many_through, rel_to.foreign_key, model_to.table.name, model.table.name)
               model_to.relations << Relation.new(:has_many_through, rel_from.foreign_key, model_from.table.name, model.table.name)
             end
