@@ -12,7 +12,7 @@ module RareMap
     private
     def organize_config_properties(raw_config)
       db_profiles = []
-      global_opts = Options.new(raw_config.delete OPTS_KEY) if raw_config[OPTS_KEY]
+      global_opts = Options.new(raw_config.delete OPTS_KEY)
       
       raw_config.each do |k, v|
         case v.class.name
@@ -24,12 +24,13 @@ module RareMap
           end
         when 'Array'
           v = v.reduce(:merge)
-          group_opts = Options.new(v.delete(OPTS_KEY), k)
+          group_opts = Options.new(v.delete(OPTS_KEY) || global_opts.opts, k)
+          
           v.each do |db, config|
             if config[OPTS_KEY]
               db_profiles << DatabaseProfile.new(remove_opts(config), Options.new(config[OPTS_KEY], k))
             else
-              db_profiles << DatabaseProfile.new(config, group_opts || global_opts)
+              db_profiles << DatabaseProfile.new(config, group_opts)
             end
           end
         end
