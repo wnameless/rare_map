@@ -40,7 +40,7 @@ module RareMap
         has_many_through = model.relations.select { |rel| rel.type == :has_many_through }
         unless has_many_through.empty?
           output << has_many_through.
-            map { |rel| "  has_many :#{rel.table.pluralize}#{"_by_#{rel.through}, :source => :#{rel.table.pluralize.singularize}" if has_many_through.count { |hmt| hmt.table == rel.table } > 1}, :through => :#{rel.through.pluralize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }.
+            map { |rel| "  has_many :#{rel.table.pluralize}#{"_by_#{rel.through}, :source => :#{rel.table.pluralize.singularize}" if has_many_through.count { |hmt| hmt.table == rel.table } > 1 || has_many.count { |hm| hm.table == rel.table } > 0 }, :through => :#{rel.through.pluralize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }.
             join("\n") << "\n"
         end
         
