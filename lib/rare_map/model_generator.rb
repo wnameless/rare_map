@@ -10,7 +10,7 @@ module RareMap
         output = ''
         output <<
         "class #{model.classify} < ActiveRecord::Base\n" <<
-        "  establish_connection #{model.connection.to_s[1..-2]}\n" <<
+        "  establish_connection #{model.connection.map { |k, v| ":#{k} => #{v.inspect}" }.join(', ')}\n" <<
         "  self.table_name = '#{model.table.name}'\n" <<
         "  self.inheritance_column = 'ruby_type'\n" <<
         "  #{ "self.primary_key = '#{model.table.primary_key}'\n" if model.table.primary_key }\n" <<
