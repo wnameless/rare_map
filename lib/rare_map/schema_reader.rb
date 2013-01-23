@@ -5,7 +5,7 @@ module RareMap
     def read_schema(db_profile)
       conn = db_profile.connection.map { |k, v| v.kind_of?(Integer) ? "'#{k}'=>#{v}" : "'#{k}'=>'#{v}'" }.join(', ')
       if RUBY_PLATFORM == "java"
-        %x[jruby -e "require 'active_record'; ActiveRecord::Base.establish_connection(#{conn}); ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection);"]
+        %x[jruby -e "require 'active_record'; require 'activerecord-jdbc-adapter'; ActiveRecord::Base.establish_connection(#{conn}); ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection);"]
       else
         %x[ruby -e "require 'active_record'; ActiveRecord::Base.establish_connection(#{conn}); ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection);"]
       end
