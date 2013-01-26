@@ -53,10 +53,10 @@ module RareMap
                rel_from.table != rel_to.table
               model_from = models.find { |m| m.table.name == rel_from.table &&
                                              m.group      == model.group &&
-                                             m.db_name == model.db_name }
+                                             m.db_name    == model.db_name }
               model_to = models.find { |m| m.table.name == rel_to.table &&
                                            m.group      == model.group &&
-                                           m.db_name == model.db_name }
+                                           m.db_name    == model.db_name }
               model_from.relations << Relation.new(:has_many_through, rel_to.foreign_key, model_to.table.name, model.table.name)
               model_to.relations << Relation.new(:has_many_through, rel_from.foreign_key, model_from.table.name, model.table.name)
             end

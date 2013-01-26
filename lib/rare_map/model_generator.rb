@@ -69,14 +69,15 @@ module RareMap
     def generate_connection_models(models, path)
       group_db2conn = {}
       
-      group2connection = Hash[models.map { |model| [[model.group, model.db_name], model.connection] }]
-      group2connection.each do |(group, db_name), connection|
+      group2connection = Hash[models.map { |model| [[model.group, model.db_name], [model.connection, model.table.name]] }]
+      group2connection.each do |(group, db_name), (connection, table_name)|
         model = "#{group}_#{db_name}".camelize + 'Base'
         
         output = ''
         output <<
         "class #{model} < ActiveRecord::Base\n" <<
         "  establish_connection #{connection.map { |k, v| ":#{k} => #{v.inspect}" }.join(', ')}\n" <<
+        "  self.table_name = '#{table_name}'\n" <<
         'end'
         
         
