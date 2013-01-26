@@ -18,9 +18,9 @@ module RareMap
         case v.class.name
         when 'Hash'
           if v[OPTS_KEY]
-            db_profiles << DatabaseProfile.new(remove_opts(v), Options.new(v[OPTS_KEY]))
+            db_profiles << DatabaseProfile.new(k, remove_opts(v), Options.new(v[OPTS_KEY]))
           else
-            db_profiles << DatabaseProfile.new(v, global_opts)
+            db_profiles << DatabaseProfile.new(k, v, global_opts)
           end
         when 'Array'
           v = v.reduce(:merge)
@@ -28,9 +28,9 @@ module RareMap
           
           v.each do |db, config|
             if config[OPTS_KEY]
-              db_profiles << DatabaseProfile.new(remove_opts(config), Options.new(config[OPTS_KEY], k))
+              db_profiles << DatabaseProfile.new(db, remove_opts(config), Options.new(config[OPTS_KEY], k))
             else
-              db_profiles << DatabaseProfile.new(config, group_opts)
+              db_profiles << DatabaseProfile.new(db, config, group_opts)
             end
           end
         end
@@ -45,11 +45,11 @@ module RareMap
   end
   
   class DatabaseProfile
-    attr_reader :connection, :options
+    attr_reader :name, :connection, :options
     attr_accessor :schema, :tables
     
-    def initialize(connection, options)
-      @connection = connection
+    def initialize(name, connection, options)
+      @name, @connection = name, connection
       @options = options || Options.new
       @tables = []
     end

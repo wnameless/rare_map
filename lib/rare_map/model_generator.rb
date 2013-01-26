@@ -5,12 +5,15 @@ module RareMap
     def generate_models(models, root = './')
       root ||= './'
       path = root + 'app/models/'
+      Dir.mkdir root + 'app' unless Dir.exist? root + 'app'
+      Dir.mkdir path unless Dir.exist? path
+      
+      group_db2conn = generate_connection_models(models, path)
       
       models.each do |model|
         output = ''
         output <<
-        "class #{model.classify} < ActiveRecord::Base\n" <<
-        "  establish_connection #{model.connection.map { |k, v| ":#{k} => #{v.inspect}" }.join(', ')}\n" <<
+        "class #{model.classify} < #{group_db2conn[[model.group, model.db_name]]}\n" <<
         "  self.table_name = '#{model.table.name}'\n" <<
         "  self.inheritance_column = 'ruby_type'\n" <<
         "  #{ "self.primary_key = '#{model.table.primary_key}'\n" if model.table.primary_key }\n" <<
@@ -46,8 +49,6 @@ module RareMap
         
         output << 'end'
         
-        Dir.mkdir root + 'app' unless Dir.exist? root + 'app'
-        Dir.mkdir path unless Dir.exist? path
         Dir.mkdir path + "#{model.group}" unless Dir.exist? path + "#{model.group}"
         f = File.new(path + "#{model.group}/#{model.classify.underscore}.rb", 'w')
         f.write output
@@ -61,8 +62,33 @@ module RareMap
     def classify_by_table(table, model, models)
       model = models.find { |m| m.table.name == table &&
                                 m.group      == model.group &&
-                                m.default_id == model.default_id }
+                                m.db_name    == model.db_name }
       model.classify
+    end
+    
+    def generate_connection_models(models, path)
+      group_db2conn = {}
+      
+      group2connection = Hash[models.map { |model| [[model.group, model.db_name], model.connection] }]
+      group2connection.each do |(group, db_name), connection|
+        model = "#{group}_#{db_name}".camelize + 'Base'
+        
+        output = ''
+        output <<
+        "class #{model} < ActiveRecord::Base\n" <<
+        "  establish_connection #{connection.map { |k, v| ":#{k} => #{v.inspect}" }.join(', ')}\n" <<
+        'end'
+        
+        
+        Dir.mkdir path + "#{group}" unless Dir.exist? path + "#{group}"
+        f = File.new(path + "#{group}/#{model.underscore}.rb", 'w')
+        f.write output
+        f.close
+        
+        group_db2conn[[group, db_name]] = model
+      end
+      
+      group_db2conn
     end
   end
 end

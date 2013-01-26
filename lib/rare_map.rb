@@ -45,6 +45,7 @@ module RareMap
     def generate_demo
       f = File.new('demo.rb', 'w')
       f.write "require 'active_record'\n"
+      f.write "Dir[File.dirname(__FILE__) + '/app/models/**/base*.rb'].each { |file| require file }\n"
       f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*.rb'].each { |file| require file }\n"
       f.close
     end

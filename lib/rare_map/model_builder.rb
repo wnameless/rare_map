@@ -5,7 +5,6 @@ module RareMap
     def build_models(db_profiles)
       models = []
       
-      default_id = 1
       db_profiles.each do |db_prof|
         db_prof.tables.each do |table|
           opts = db_prof.options
@@ -13,12 +12,11 @@ module RareMap
           set_foreign_keys_by_options(table, opts)
           set_fk_suffix_by_options(table, opts)
           if opts.group?
-            models << Model.new(db_prof.connection, table, opts.group)
+            models << Model.new(db_prof.connection, table, opts.group, db_prof.name)
           else
-            models << Model.new(db_prof.connection, table, 'default', default_id)
+            models << Model.new(db_prof.connection, table, 'default', db_prof.name)
           end
         end
-        default_id += 1 unless db_prof.options.group?
       end
       
       build_relations models
@@ -29,7 +27,7 @@ module RareMap
     private
     def build_relations(models)
       models.each do |model|
-        group_models = models.select { |m| m.group == model.group && m.default_id == model.default_id }
+        group_models = models.select { |m| m.group == model.group && m.db_name == model.db_name }
         
         group_models.each do |gm|
           model.table.columns.each do |col|
@@ -55,10 +53,10 @@ module RareMap
                rel_from.table != rel_to.table
               model_from = models.find { |m| m.table.name == rel_from.table &&
                                              m.group      == model.group &&
-                                             m.default_id == model.default_id }
+                                             m.db_name == model.db_name }
               model_to = models.find { |m| m.table.name == rel_to.table &&
                                            m.group      == model.group &&
-                                           m.default_id == model.default_id }
+                                           m.db_name == model.db_name }
               model_from.relations << Relation.new(:has_many_through, rel_to.foreign_key, model_to.table.name, model.table.name)
               model_to.relations << Relation.new(:has_many_through, rel_from.foreign_key, model_from.table.name, model.table.name)
             end
@@ -89,10 +87,10 @@ module RareMap
   end
   
   class Model
-    attr_reader :connection, :table, :group, :relations, :default_id
+    attr_reader :connection, :table, :group, :relations, :db_name
     
-    def initialize(connection, table, group = 'default', default_id = nil)
-      @connection, @table, @group, @default_id = connection, table, group, default_id
+    def initialize(connection, table, group = 'default', db_name)
+      @connection, @table, @group, @db_name = connection, table, group, db_name
       @relations = []
     end
     
