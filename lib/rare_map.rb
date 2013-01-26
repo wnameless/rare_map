@@ -32,6 +32,7 @@ module RareMap
         puts '  Add following line to your config/application.rb'
         puts "    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]"
         puts '*****************************************************************************'
+        create_initializer
       else
         puts '*****************************************************************************'
         puts '  A demo.rb is generated'
@@ -48,6 +49,21 @@ module RareMap
       f.write "require 'activerecord-jdbc-adapter' if RUBY_PLATFORM == 'java'\n"
       f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*_base.rb'].each { |file| require file }\n"
       f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*.rb'].each { |file| require file }\n"
+      f.close
+    end
+    
+    def create_initializer
+      f = File.new(@rails_root + 'config/initializers/rare_map.rb')
+      f.write "bases = []; models = []\n"
+      f.write "Dir[Rails.root + 'app/models/**/*.rb'].each do |file|\n"
+      f.write "  if file =~ /models\/[^\/]+\/[^\/]+_base.rb$/\n"
+      f.write "    bases << file\n"
+      f.write "  elsif file =~ /models\/[^\/]+\/[^\/]+.rb$/\n"
+      f.write "    models << file\n"
+      f.write "  end\n"
+      f.write "end\n"
+      f.write "bases.map { |b| require b }\n"
+      f.write "models.map { |m| require m }\n"
       f.close
     end
   end
