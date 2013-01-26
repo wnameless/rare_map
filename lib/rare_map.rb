@@ -53,7 +53,7 @@ module RareMap
     end
     
     def create_initializer
-      f = File.new(@rails_root + 'config/initializers/rare_map.rb')
+      f = File.new(@rails_root + 'config/initializers/rare_map.rb', 'w')
       f.write "bases = []; models = []\n"
       f.write "Dir[Rails.root + 'app/models/**/*.rb'].each do |file|\n"
       f.write "  if file =~ /models\/[^\/]+\/[^\/]+_base.rb$/\n"
