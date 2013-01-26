@@ -56,9 +56,9 @@ module RareMap
       f = File.new(@rails_root + 'config/initializers/rare_map.rb', 'w')
       f.write "bases = []; models = []\n"
       f.write "Dir[Rails.root + 'app/models/**/*.rb'].each do |file|\n"
-      f.write "  if file =~ /models\/[^\/]+\/[^\/]+_base.rb$/\n"
+      f.write "  if file =~ /models\\/[^\\/]+\\/[^\\/]+_base.rb$/\n"
       f.write "    bases << file\n"
-      f.write "  elsif file =~ /models\/[^\/]+\/[^\/]+.rb$/\n"
+      f.write "  elsif file =~ /models\\/[^\\/]+\\/[^\\/]+.rb$/\n"
       f.write "    models << file\n"
       f.write "  end\n"
       f.write "end\n"
