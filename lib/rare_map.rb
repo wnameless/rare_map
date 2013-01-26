@@ -45,8 +45,8 @@ module RareMap
     def generate_demo
       f = File.new('demo.rb', 'w')
       f.write "require 'active_record'\n"
-      f.write "require 'activerecord-jdbc-adapter'\n" if RUBY_PLATFORM == 'java'
-      f.write "Dir[File.dirname(__FILE__) + '/app/models/**/base*.rb'].each { |file| require file }\n"
+      f.write "require 'activerecord-jdbc-adapter' if RUBY_PLATFORM == 'java'\n"
+      f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*_base.rb'].each { |file| require file }\n"
       f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*.rb'].each { |file| require file }\n"
       f.close
     end
