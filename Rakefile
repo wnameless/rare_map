@@ -2,8 +2,6 @@
 
 require 'rubygems'
 require 'bundler'
-require 'jeweler'
-require './lib/rare_map/version.rb'
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -14,19 +12,20 @@ end
 require 'rake'
 
 require 'jeweler'
+require './lib/rare_map/version.rb'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "rare_map"
   gem.homepage = "http://github.com/wnameless/rare_map"
   gem.license = "Apache License, Version 2.0"
+  gem.version = RareMap::Version::STRING
   gem.summary = "rare_map-#{gem.version}"
   gem.description = %Q{Relational db to ActiveREcord models MAPper}
   gem.email = "wnameless@gmail.com"
   gem.authors = ["Wei-Ming Wu"]
-  # dependencies defined in Gemfile
   gem.files = Dir.glob('lib/**/*.rb')
-  gem.version = RareMap::Version::STRING
   gem.executables = ['raremap']
+  # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
@@ -35,14 +34,6 @@ Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
-end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
 end
 
 task :default => :test
