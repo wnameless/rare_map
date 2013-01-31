@@ -12,8 +12,8 @@ group :development do
   gem "jeweler", "~> 1.8.4"
 end
 
-if RUBY_PLATFORM == "java"
-  gem 'activerecord-jdbc-adapter'
+platforms :jruby do
+  gem "activerecord-jdbc-adapter", "~> 1.2.5"
 end
 
 gem "rails", "~> 3.2.0"
