@@ -1,4 +1,5 @@
 require 'active_record'
+require 'activerecord-jdbc-adapter' if RUBY_PLATFORM == 'java'
 
 module RareMap
   module SchemaReader

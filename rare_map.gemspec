@@ -21,12 +21,11 @@ Gem::Specification.new do |s|
   s.files = Dir["{lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_runtime_dependency(%q<rails>, ["~> 3.2.0"])
-  s.add_runtime_dependency(%q<activerecord-jdbc-adapter>, ["~> 1.2.5"]) if RUBY_PLATFORM == 'java'
+  s.add_runtime_dependency "activerecord", "~> 3.2.11"
+  s.add_runtime_dependency "activesupport", "~> 3.2.11"
   
-  s.add_development_dependency(%q<shoulda>, ["~> 3.3.2"])
-  s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-  s.add_development_dependency(%q<bundler>, ["~> 1.2.3"])
-  s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])    
+  s.add_development_dependency "shoulda", "~> 3.3.2"
+  s.add_development_dependency "rdoc", "~> 3.12"
+  s.add_development_dependency "bundler", "~> 1.2.3"
+  s.add_development_dependency "rake", "~> 10.0.3"
 end
-
