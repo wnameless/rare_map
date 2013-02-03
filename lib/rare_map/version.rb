@@ -1,9 +1,7 @@
-class RareMap
-  module Version
-    MAJOR = 1
-    MINOR = 2
-    PATCH = 7
+module RareMap
+  MAJOR = 1
+  MINOR = 2
+  PATCH = 8
 
-    STRING = [MAJOR, MINOR, PATCH].compact.join('.')
-  end
+  VERSION = [MAJOR, MINOR, PATCH].compact.join('.')
 end
