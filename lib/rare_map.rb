@@ -29,8 +29,7 @@ module RareMap
       generate_models @models, @rails_root
       if @rails_root
         puts '*****************************************************************************'
-        puts '  Add following line to your config/application.rb'
-        puts "    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]"
+        puts '  A rare_map.rb initializer has been created in config/initializers'
         puts '*****************************************************************************'
         create_initializer
       else
