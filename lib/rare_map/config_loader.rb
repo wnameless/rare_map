@@ -1,12 +1,14 @@
 require 'yaml'
+require 'rare_map/errors'
 
 module RareMap
   module ConfigLoader
     OPTS_KEY = 'rare_map_opts'
     
-    def load_config(path, file_name = 'database.yml')
+    def load_config(path, file_name = 'rare_map.yml')
+      raise ConfigNotFoundError unless File.exist? "#{path}#{file_name}"
       config = YAML.load_file "#{path}#{file_name}"
-      organize_config_properties config['rare_map'] || {}
+      organize_config_properties config['rare_map'] || config || {}
     end
     
     private

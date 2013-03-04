@@ -1,9 +1,7 @@
-$:.push File.expand_path("../lib", __FILE__)
-
-# Maintain your gem's version:
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "rare_map/version"
 
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name = "rare_map"
   s.version = "#{RareMap::VERSION}"
@@ -21,11 +19,11 @@ Gem::Specification.new do |s|
   s.files = Dir["{lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_runtime_dependency "activerecord", "~> 3.2.11"
-  s.add_runtime_dependency "activesupport", "~> 3.2.11"
+  s.add_runtime_dependency "activerecord", "~> 3.2.0"
+  s.add_runtime_dependency "activesupport", "~> 3.2.0"
   
   s.add_development_dependency "shoulda", "~> 3.3.2"
   s.add_development_dependency "rdoc", "~> 3.12"
-  s.add_development_dependency "bundler", "~> 1.2.3"
-  s.add_development_dependency "rake", "~> 10.0.3"
+  s.add_development_dependency "bundler", "~> 1.3"
+  s.add_development_dependency "rake"
 end

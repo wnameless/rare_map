@@ -99,11 +99,7 @@ module RareMap
     end
     
     def classify
-      if group?
-        "#{group}_#{table.name}".pluralize.classify
-      else
-        "#{table.name}".pluralize.classify
-      end
+      "#{table.name}".pluralize.classify
     end
   end
   

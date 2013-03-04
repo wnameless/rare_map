@@ -1,5 +1,3 @@
-# $:.unshift File.dirname(__FILE__)
-
 require 'rare_map/rails_locator'
 require 'rare_map/config_loader'
 require 'rare_map/schema_reader'
@@ -28,17 +26,19 @@ module RareMap
       @models = build_models @db_profiles
       generate_models @models, @rails_root
       if @rails_root
-        puts '*****************************************************************************'
-        puts '  A rare_map.rb initializer has been created in config/initializers'
-        puts '*****************************************************************************'
-        create_initializer
+        puts '*****************************************************************'
+        puts '  Activerecord models are generated. Enjoy it!'
+        puts '*****************************************************************'
       else
-        puts '*****************************************************************************'
-        puts '  A demo.rb is generated'
-        puts '*****************************************************************************'
+        puts '*****************************************************************'
+        puts '  A demo.rb is generated.'
+        puts '*****************************************************************'
         generate_demo unless File.exist?('demo.rb')
       end
       @models
+      
+      rescue ConfigNotFoundError => e
+        puts "Please put your database config in `#{'config/' if @rails_root}rare_map.yml`."
     end
     
     private
@@ -48,21 +48,6 @@ module RareMap
       f.write "require 'activerecord-jdbc-adapter' if RUBY_PLATFORM == 'java'\n"
       f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*_base.rb'].each { |file| require file }\n"
       f.write "Dir[File.dirname(__FILE__) + '/app/models/**/*.rb'].each { |file| require file }\n"
-      f.close
-    end
-    
-    def create_initializer
-      f = File.new(@rails_root + 'config/initializers/rare_map.rb', 'w')
-      f.write "bases = []; models = []\n"
-      f.write "Dir[Rails.root + 'app/models/**/*.rb'].each do |file|\n"
-      f.write "  if file =~ /models\\/[^\\/]+\\/[^\\/]+_base.rb$/\n"
-      f.write "    bases << file\n"
-      f.write "  elsif file =~ /models\\/[^\\/]+\\/[^\\/]+.rb$/\n"
-      f.write "    models << file\n"
-      f.write "  end\n"
-      f.write "end\n"
-      f.write "bases.map { |b| require b }\n"
-      f.write "models.map { |m| require m }\n"
       f.close
     end
   end
