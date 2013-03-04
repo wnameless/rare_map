@@ -1,10 +1,8 @@
-= rare_map >= 1.0.0
+= rare_map >= 2.0.0
 
 Relational db to ActiveREcord models MAPper
 
 RareMap can be used for BOTH standalone application & Rails
-
-WARN: rare_map >= 1.0.0 is totally not compatible with 0.9.x
 
 * Installation:
 
@@ -13,63 +11,58 @@ WARN: rare_map >= 1.0.0 is totally not compatible with 0.9.x
 == Basic RareMap use
 
 ==== Standalone:
-Create a new database.yml with following lines in the root of your application
+Create a new rare_map.yml with following lines in the root of your application
 
 ====  Rails:
-Add following lines to config/database.yml of rails
+Create a new config/rare_map.yml with following lines in rails
 
-*  database.yml
+*  rare_map.yml
 
-    rare_map:
-      legacy_db1:
-        adapter: sqlite3
-        database: db/db1.sqlite3
+    legacy:
+      adapter: sqlite3
+      database: db/db1.sqlite3
 
-      legacy_db2:
-        adapter: mysql2
-        host: localhost
-        database: db_name
-        port: 3306
-        username: user
-        password: pw
+    old_db:
+      adapter: mysql2
+      host: localhost
+      database: db_name
+      port: 3306
+      username: user
+      password: pw
 
 * Run following command in the root of your application or rails
 
    $ raremap
 
-* Standalone: A demo.rb example is generated for you in the root of your applicaiton
-
-* Rails: Add following line to your config/application.rb
-   config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
+* Standalone: A demo.rb example is generated for you in the root of your application
 
 == Advanced RareMap use
 
-==== Seperate databases to groups(highly recommended)
+==== Seperate databases into groups (highly recommended)
    
-    rare_map:
-      her_group:
-        -
-          db1:
-            adapter: sqlite3
-            database: db/db1.sqlite3
-        -
-          db2:
-            adapter: sqlite3
-            database: db/db1.sqlite3
+    her_group:
+      -
+        db1:
+          adapter: sqlite3
+          database: db/db1.sqlite3
+      -
+        db2:
+          adapter: sqlite3
+          database: db/db1.sqlite3
 
-      his_group:
-        -
-          db1:
-            adapter: sqlite3
-            database: db/db3.sqlite3
-        -
-          db2:
-            adapter: sqlite3
-            database: db/db4.sqlite3
+    his_group:
+      -
+        db1:
+          adapter: sqlite3
+          database: db/db3.sqlite3
+      -
+        db2:
+          adapter: sqlite3
+          database: db/db4.sqlite3
 
 There are benefits by separating databases into groups
 1. Associations are built between databases within a group
-2. Model name is prepended with group name
+2. Group name is treated as a module namespace
 3. Models of a group are organized within a folder
 
 If all your data reside in several legacy databases, it is important to build back those associations across databases
@@ -97,90 +90,22 @@ If there are tons of tables, it is better to organize them well
 
 You can place rare_map options in 3 ways
 
- rare_map:
-   rare_map_opts:             # Global options
-     ...
-   group1:
-     -
-       rare_map_opts:         # Group options
-         ...
-     -
-       db1:
-         ...
-   legacy_db:
-     adapter: sqlite3
-     database: db/db.sqlite3
-     rare_map_opts:           # DB options
+ rare_map_opts:             # Global options
+   ...
+ group1:
+   -
+     rare_map_opts:         # Group options
        ...
+   -
+     db1:
+       ...
+ legacy_db:
+   adapter: sqlite3
+   database: db/db.sqlite3
+   rare_map_opts:           # DB options
+     ...
 
 * Precedence: DB > Group > Global
-
-
-= rare_map ~> 0.9.x(deprecated)
-
-Relational DB to ActiveRecord models Mapper
-
-* Installation:
-
-   gem install rare_map
-
-== Basic RareMap use
-
-Set up your legacay db under your Rails applicaiton
-
-*  database.yml
-
-    mylegacy_db1:
-      adapter: sqlite3
-      database: db/db1.sqlite3
-
-    mylegacy_db2:
-      adapter: sqlite3
-      database: db/db2/sqlite3
-
-    hislegacy_db1:
-      adapter: sqlite3
-      database: db/db1.sqlite3
-
-"mylegacy" is treated as a group name.
-
-You MUST give all your legacy databases a group name.
-
-The associations of databases with the same group name will be built together.
-
-
-* Create a {RAILS_ROOT}/demo.rb file with following content under your Rails application
-
-   RareMap.mapping
-
-* Under terminal
-
-   ruby demo.rb
-
-* Add following line to your config/application.rb
-
-   config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
-
-== Advanced RareMap use
-
-If the foreign key of your legacy db is not end with '_id', you can change it manually.
-
-  foreign_keys = { :mylegacy => 'id', :hislegacy => 'id' }
-
-If the foreign key is not started with regular table names, you can create aliases for them.
-
-  aliases = { :mylegacy => { :pclid => :protocol, personid => people }, :hislegacy => { :measid => measurement } }
-
-Some of the databases like Oracle won't show the primary key on the dump of schema. If your primary key of a table is not 'id' and it didn't show the schema either. You can specify your special primary key beside 'id' if you want.
-
-  primary_keys = { :mylegacy => { :table1 => 'table1id' }, :hislegacy => { :table2 => 'table2id' } }
-
-When you using the RareMap
-
-  info = RareMap.mapping(:foreign_key => foreign_keys, :alias => aliases, :primary_key => primary_keys)
-
-[info]
-It contains all details of your tables.
 
 
 == Contributing to rare_map
