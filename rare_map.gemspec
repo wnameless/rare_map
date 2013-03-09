@@ -1,18 +1,18 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "rare_map/version"
+require "date"
 
 Gem::Specification.new do |s|
   s.name = "rare_map"
   s.version = "#{RareMap::VERSION}"
   s.authors = ["Wei-Ming Wu"]
-  s.date = "2013-02-04"
+  s.date = "#{Date.today.to_s}"
   s.description = "Relational db to ActiveREcord models MAPper"
   s.email = "wnameless@gmail.com"
   s.homepage = "http://github.com/wnameless/rare_map"
   s.licenses = ["Apache License, Version 2.0"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
   s.summary = "rare_map-#{RareMap::VERSION}"
   
   s.executables = ["raremap"]
