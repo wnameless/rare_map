@@ -27,7 +27,11 @@ module RareMap
     private
     def build_relations(models)
       models.each do |model|
-        group_models = models.select { |m| m.group == model.group && m.db_name == model.db_name }
+        if model.group?
+          group_models = models.select { |m| m.group == model.group }
+        else
+          group_models = models.select { |m| m.group == model.group && m.db_name == model.db_name }
+        end
         
         group_models.each do |gm|
           model.table.columns.each do |col|
@@ -47,16 +51,23 @@ module RareMap
       models.each do |model|
         model.relations.each do |rel_from|
           model.relations.each do |rel_to|
-            if rel_from != rel_to &&
-               rel_from.type == :belongs_to &&
-               rel_to.type == :belongs_to &&
-               rel_from.table != rel_to.table
-              model_from = models.find { |m| m.table.name == rel_from.table &&
+            if rel_from != rel_to && rel_from.table != rel_to.table &&
+              rel_from.type == :belongs_to && rel_to.type == :belongs_to 
+               
+              if model.group?
+                model_from = models.find { |m| m.table.name == rel_from.table &&
+                                               m.group      == model.group }
+                model_to = models.find { |m| m.table.name == rel_to.table &&
+                                             m.group      == model.group }
+              else
+                model_from = models.find { |m| m.table.name == rel_from.table &&
+                                               m.group      == model.group &&
+                                               m.db_name    == model.db_name }
+                model_to = models.find { |m| m.table.name == rel_to.table &&
                                              m.group      == model.group &&
                                              m.db_name    == model.db_name }
-              model_to = models.find { |m| m.table.name == rel_to.table &&
-                                           m.group      == model.group &&
-                                           m.db_name    == model.db_name }
+              end
+              
               model_from.relations << Relation.new(:has_many_through, rel_to.foreign_key, model_to.table.name, model.table.name)
               model_to.relations << Relation.new(:has_many_through, rel_from.foreign_key, model_from.table.name, model.table.name)
             end

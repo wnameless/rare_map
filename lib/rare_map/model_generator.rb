@@ -62,9 +62,15 @@ module RareMap
     
     private
     def classify_by_table(table, model, models)
-      model = models.find { |m| m.table.name == table &&
-                                m.group      == model.group &&
-                                m.db_name    == model.db_name }
+      if model.group?
+        model = models.find { |m| m.table.name == table &&
+                                  m.group      == model.group }
+      else
+        model = models.find { |m| m.table.name == table &&
+                                  m.group      == model.group &&
+                                  m.db_name    == model.db_name }
+      end
+      
       model.classify
     end
     
