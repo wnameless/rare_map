@@ -2,4 +2,23 @@
 
 require 'rare_map'
 
-RareMap.mapping
+if ARGV[0] == 'console' || ARGV[0] == 'c'
+  bases = Dir['./app/models/**/*_base.rb']
+  models = Dir['./app/models/**/*.rb'] - bases
+
+  if bases.empty? && models.empty?
+    puts '*****************************************************************'
+    puts "  RareMap console can't be launched!"
+    puts "  Please put your ActiveRecord models in app/models directory."
+    puts '*****************************************************************'
+    exit
+  end
+
+  options = "-I./app/models -ractive_record"
+  bases.each { |file| options << " -r#{file}" }
+  models.each { |file| options << " -r#{file}" }
+
+  exec "irb " << options << " --simple-prompt"
+else
+  RareMap.mapping
+end
