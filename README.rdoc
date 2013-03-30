@@ -35,6 +35,9 @@ Create a new config/rare_map.yml with following lines in rails
    $ raremap
 
 * Standalone: A demo.rb example is generated for you in the root of your application
+* RareMap console which is like rails console for standalone app can be run by following command
+
+   $ raremap console  # or simply run `raremap c`
 
 == Advanced RareMap use
 
