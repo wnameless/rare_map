@@ -18,34 +18,36 @@ module RareMap
         "    self.table_name = '#{model.table.name}'\n" <<
         "    self.inheritance_column = 'ruby_type'\n" <<
         "    #{ "self.primary_key = '#{model.table.primary_key}'\n" if model.table.primary_key }\n" <<
-        "    attr_accessible #{model.table.columns.map { |col| ":#{col.name}" }.join(', ')}\n\n"
+        "    if ActiveRecord::VERSION::STRING < '4.0.0'\n" <<
+        "      attr_accessible #{model.table.columns.map { |col| ":#{col.name}" }.join(', ')}\n" <<
+        "    end\n\n"
         
         belongs_to = model.relations.select { |rel| rel.type == :belongs_to }
         unless belongs_to.empty?
-          output << belongs_to.
-            map { |rel| "    belongs_to :#{rel.table.pluralize.singularize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }.
-            join("\n") << "\n"
+          output << belongs_to
+            .map { |rel| "    belongs_to :#{rel.table.pluralize.singularize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }
+            .join("\n") << "\n"
         end
         
         has_one = model.relations.select { |rel| rel.type == :has_one }
         unless has_one.empty?
-          output << has_one.
-            map { |rel| "    has_one :#{rel.table.pluralize.singularize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }.
-            join("\n") << "\n"
+          output << has_one
+            .map { |rel| "    has_one :#{rel.table.pluralize.singularize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }
+            .join("\n") << "\n"
         end
         
         has_many = model.relations.select { |rel| rel.type == :has_many }
         unless has_many.empty?
-          output << has_many.
-            map { |rel| "    has_many :#{rel.table.pluralize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }.
-            join("\n") << "\n"
+          output << has_many
+            .map { |rel| "    has_many :#{rel.table.pluralize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }
+            .join("\n") << "\n"
         end
         
         has_many_through = model.relations.select { |rel| rel.type == :has_many_through }
         unless has_many_through.empty?
-          output << has_many_through.
-            map { |rel| "    has_many :#{rel.table.pluralize}#{"_by_#{rel.through}, :source => :#{rel.table.pluralize.singularize}" if has_many_through.count { |hmt| hmt.table == rel.table } > 1 || has_many.count { |hm| hm.table == rel.table } > 0 }, :through => :#{rel.through.pluralize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }.
-            join("\n") << "\n"
+          output << has_many_through
+            .map { |rel| "    has_many :#{rel.table.pluralize}#{"_by_#{rel.through}, :source => :#{rel.table.pluralize.singularize}" if has_many_through.count { |hmt| hmt.table == rel.table } > 1 || has_many.count { |hm| hm.table == rel.table } > 0 }, :through => :#{rel.through.pluralize}, :foreign_key => '#{rel.foreign_key}', :class_name => '#{classify_by_table(rel.table, model, models)}'" }
+            .join("\n") << "\n"
         end
         
         output << "  end\n"

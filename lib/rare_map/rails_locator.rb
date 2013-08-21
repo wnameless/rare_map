@@ -1,7 +1,7 @@
 module RareMap
   module RailsLocator
    def locate_rails_root(depth = 5)
-      rails_dirs = ['app', 'config', 'db', 'lib', 'log', 'public', 'script']
+      rails_dirs = ['app', 'config', 'db', 'lib', 'log', 'public']
       
       depth.times do |level|
         found = true
