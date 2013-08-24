@@ -18,7 +18,7 @@ module RareMap
         "    self.table_name = '#{model.table.name}'\n" <<
         "    self.inheritance_column = 'ruby_type'\n" <<
         "    #{ "self.primary_key = '#{model.table.primary_key}'\n" if model.table.primary_key }\n" <<
-        "    if ActiveRecord::VERSION::STRING < '4.0.0'\n" <<
+        "    if ActiveRecord::VERSION::STRING < '4.0.0' || defined?(ProtectedAttributes)\n" <<
         "      attr_accessible #{model.table.columns.map { |col| ":#{col.name}" }.join(', ')}\n" <<
         "    end\n\n"
         
