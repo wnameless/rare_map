@@ -2,7 +2,12 @@ require 'active_record'
 require 'activerecord-jdbc-adapter' if RUBY_PLATFORM == 'java'
 
 module RareMap
+  # RareMap::SchemaReader dumps database schema by using ActiveRecord::SchemaDumper.
+  # @author Wei-Ming Wu
   module SchemaReader
+    # Returns the content of schema.rb which is created by ActiveRecord::SchemaDumper.
+    #
+    # @return [String] the content of schema.rb which is created by ActiveRecord::SchemaDumper
     def read_schema(db_profile)
       conn = db_profile.connection.map { |k, v| v.kind_of?(Integer) ? "'#{k}'=>#{v}" : "'#{k}'=>'#{v}'" }.join(', ')
       schema = if RUBY_PLATFORM == 'java'
@@ -20,6 +25,8 @@ module RareMap
       schema.string
 =end
     end
+    
+    private
     
     def detect_errors(schema)
       if $? != 0

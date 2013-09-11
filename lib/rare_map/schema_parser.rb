@@ -2,7 +2,12 @@ require 'rare_map/table'
 require 'rare_map/column'
 
 module RareMap
+  # RareMap::SchemaParser parses schema.rb into Table.
+  # @author Wei-Ming Wu
   module SchemaParser
+    # Parses schema.rb into an Array of Table.
+    #
+    # @return [Array] an Array of Table
     def parse_schema(schema)
       tables = []
       

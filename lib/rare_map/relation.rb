@@ -13,11 +13,15 @@ module RareMap
   # @!attribute [r] through
   #   @return [String, nil] the table of this Relation goes through
   class Relation
-    include Errors
+    # The :has_one association.
     HAS_ONE = :has_one
+    # The :has_many association.
     HAS_MANY = :has_many
+    # The :has_many_through association.
     HAS_MANY_THROUGH = :has_many_through
+    # All three kinds of relations
     RELATIONS = [HAS_ONE, HAS_MANY, HAS_MANY_THROUGH]
+    include Errors
     attr_reader :type, :foreign_key, :table, :through
     
     # Creates a Relation.
