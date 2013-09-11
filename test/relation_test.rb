@@ -5,6 +5,7 @@ class RelationTest < Test::Unit::TestCase
   MiniTest::Unit::TestCase::SUPPORTS_INFO_SIGNAL = nil
   def run_setup_hooks ; end
   def run_teardown_hooks ; end
+  
   include RareMap::Errors
   
   def setup
