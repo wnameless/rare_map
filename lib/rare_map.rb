@@ -5,20 +5,29 @@ require 'rare_map/schema_parser'
 require 'rare_map/model_builder'
 require 'rare_map/model_generator'
 
+# RareMap
+# @author Wei-Ming Wu
 module RareMap
+  # A class method to make RareMap::Mapper#mapping easy to be called.
   def self.mapping
     Mapper.new.mapping
   end
   
+  # RareMap::Mapper converts relational databases into ActiveRecord files.
+  # @author Wei-Ming Wu
   class Mapper
     include RailsLocator, ConfigLoader, SchemaReader, SchemaParser, ModelBuilder, ModelGenerator
     
+    # Creates a Mapper.
+    #
+    # @return [Mapper] a Mapper object
     def initialize
       @rails_root = locate_rails_root
     end
     
+    # Converts relational databases into ActiveRecord files by given RareMap config yaml file.
     def mapping
-      @db_profiles = load_config @rails_root ? File.join(@rails_root, 'config') : './'
+      @db_profiles = load_config @rails_root ? File.join(@rails_root, 'config') : '.'
       @db_profiles.each do |profile|
         profile.schema = read_schema profile
         profile.tables = parse_schema profile.schema

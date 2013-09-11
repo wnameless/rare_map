@@ -16,7 +16,7 @@ module RareMap
     # @param [String] path the folder which contains the RareMap config
     # @param [String] file_name the name of the RareMap config
     # @return [Array] an Array of DatabaseProfile
-    def load_config(path, file_name = 'rare_map.yml')
+    def load_config(path = '.', file_name = 'rare_map.yml')
       raise ConfigNotFoundError unless File.exist? File.join(path, file_name)
       config = YAML.load_file File.join(path, file_name)
       organize_config_properties config['rare_map'] || config || {}

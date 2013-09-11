@@ -3,7 +3,12 @@ require 'rare_map/model'
 require 'rare_map/relation'
 
 module RareMap
+  # RareMap::ModelBuilder converts an Array of DatabaseProfile into an Array of Model.
+  # @author Wei-Ming Wu
   module ModelBuilder
+    # Creaetes an Array of Model by given DatabaseProfile(s).
+    #
+    # @return [Array] an Array of Model
     def build_models(db_profiles)
       models = []
       
@@ -16,7 +21,7 @@ module RareMap
           if opts.group?
             models << Model.new(db_prof.name, db_prof.connection, table, opts.group)
           else
-            models << Model.new(db_prof.name, db_prof.connection, table, 'default')
+            models << Model.new(db_prof.name, db_prof.connection, table)
           end
         end
       end

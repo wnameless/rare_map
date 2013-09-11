@@ -1,11 +1,14 @@
 require 'active_support/inflector'
 
 module RareMap
+  # RareMap::ModelGenerator converts an Array of Model into ActiveRecord files.
+  # @author Wei-Ming Wu
   module ModelGenerator
-    def generate_models(models, root = './')
-      root ||= './'
-      path = root + 'app/models/'
-      Dir.mkdir root + 'app' unless Dir.exist? root + 'app'
+    # Creaetes ActiveRecord files by given Model(s) under app/models directory.
+    def generate_models(models, root = '.')
+      root ||= '.'
+      path = File.join(root, 'app', 'models')
+      Dir.mkdir File.join(root, 'app') unless Dir.exist? File.join(root, 'app')
       Dir.mkdir path unless Dir.exist? path
       
       group_db2conn = generate_connection_models(models, path)
@@ -53,8 +56,8 @@ module RareMap
         output << "  end\n"
         output << 'end'
         
-        Dir.mkdir path + "#{model.group.underscore}" unless Dir.exist? path + "#{model.group}"
-        f = File.new(path + "#{model.group.underscore}/#{model.classify.underscore}.rb", 'w')
+        Dir.mkdir File.join(path, "#{model.group.underscore}") unless Dir.exist? File.join(path, "#{model.group}")
+        f = File.new File.join(path, "#{model.group.underscore}", "#{model.classify.underscore}.rb"), 'w'
         f.write output
         f.close
       end
@@ -94,8 +97,8 @@ module RareMap
         'end'
         
         
-        Dir.mkdir path + "#{group.underscore}" unless Dir.exist? path + "#{group}"
-        f = File.new(path + "#{group.underscore}/#{model.underscore}.rb", 'w')
+        Dir.mkdir File.join(path, "#{group.underscore}") unless Dir.exist? File.join(path, "#{group}")
+        f = File.new File.join(path, "#{group.underscore}", "#{model.underscore}.rb"), 'w'
         f.write output
         f.close
         
