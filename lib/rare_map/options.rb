@@ -41,14 +41,12 @@ module RareMap
     
     # Returns the primary key of a table specified by this Options
     def find_primary_key_by_table(table_name)
-      @opts['primary_key'].each { |k, v| return v if k == table_name }
-      nil
+      @opts['primary_key'].values_at(table_name).first
     end
     
      # Returns the table of a foreign key specified by this Options
     def find_table_by_foreign_key(column_name)
-      @opts['foreign_key']['alias'].each { |k, v| return v if k == column_name }
-      nil
+      @opts['foreign_key']['alias'].values_at(column_name).first
     end
     
     # Returns the suffix of a foreign key should have
