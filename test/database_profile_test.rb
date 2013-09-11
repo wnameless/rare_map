@@ -6,7 +6,7 @@ class DatabaseProfileTest < Test::Unit::TestCase
   def setup
     @connection = { adapter: 'sqlite3', database: 'db/test.sqlite3' }
     @options = RareMap::Options.new
-    @db_profile = RareMap::DatabaseProfile.new 'profile1',@connection, @options
+    @db_profile = RareMap::DatabaseProfile.new 'profile1', @connection, @options
   end
   
   def test_constructor
