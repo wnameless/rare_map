@@ -14,9 +14,9 @@ module RareMap
           set_foreign_keys_by_options(table, opts)
           set_fk_suffix_by_options(table, opts)
           if opts.group?
-            models << Model.new(db_prof.connection, table, opts.group, db_prof.name)
+            models << Model.new(db_prof.name, db_prof.connection, table, opts.group)
           else
-            models << Model.new(db_prof.connection, table, 'default', db_prof.name)
+            models << Model.new(db_prof.name, db_prof.connection, table, 'default')
           end
         end
       end

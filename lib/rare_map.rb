@@ -37,8 +37,8 @@ module RareMap
       end
       @models
       
-      rescue ConfigNotFoundError => e
-        puts "Please put your database config in `#{'config/' if @rails_root}rare_map.yml`."
+    rescue ConfigNotFoundError => e
+      puts "Please put your database config in `#{'config/' if @rails_root}rare_map.yml`."
     end
     
     private

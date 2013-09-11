@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 module RareMap
   class Table
     attr_reader :name, :id, :columns

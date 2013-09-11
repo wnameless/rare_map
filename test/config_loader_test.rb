@@ -1,6 +1,5 @@
 require 'test_helper'
 require 'rare_map/config_loader'
-require 'rare_map/errors'
 
 class ConfigLoaderTest < Test::Unit::TestCase
   include RareMap::ConfigLoader
@@ -11,9 +10,8 @@ class ConfigLoaderTest < Test::Unit::TestCase
   def run_teardown_hooks ; end
   
   def test_load_config_error
-    load_config 'no_file'
-    assert false
-  rescue ConfigNotFoundError => e
-    assert true
+    assert_raise ConfigNotFoundError do
+      load_config 'no_file'
+    end
   end
 end

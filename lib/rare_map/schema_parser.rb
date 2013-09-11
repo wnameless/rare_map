@@ -1,4 +1,3 @@
-require 'active_support/inflector'
 require 'rare_map/table'
 require 'rare_map/column'
 

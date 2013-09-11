@@ -1,9 +1,11 @@
+require 'active_support/inflector'
+
 module RareMap
   class Model
-    attr_reader :connection, :table, :group, :relations, :db_name
+    attr_reader :db_name, :connection, :table, :group, :relations
     
-    def initialize(connection, table, group = 'default', db_name)
-      @connection, @table, @group, @db_name = connection, table, group, db_name
+    def initialize(db_name, connection, table, group = 'default')
+      @db_name, @connection, @table, @group = db_name, connection, table, group
       @relations = []
     end
     
