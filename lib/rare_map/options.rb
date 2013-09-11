@@ -1,8 +1,12 @@
 module RareMap
+  # RareMap::Options defines all available options of RareMap. 
   class Options
     DEFAULT_GROUP = 'default'
     attr_reader :opts
     
+    # RareMap::Options.new raw_opts, group
+    # raw_opts is simply a hash, please refer to the README.rdoc for details
+    # group is where this Options belongs to
     def initialize(raw_opts = nil, group = nil)
       @opts = { 'group'       => DEFAULT_GROUP,
                 'primary_key' => {},
@@ -25,28 +29,34 @@ module RareMap
       @opts['group'] = group if group.kind_of? String
     end
     
+    # Returns true if this Options contains a group, false otherwise
     def group?
       @opts['group'] != DEFAULT_GROUP
     end
     
+    # Returns the name of this Options' group
     def group
       @opts['group'] || DEFAULT_GROUP
     end
     
+    # Returns the primary key of a table specified by this Options
     def find_primary_key_by_table(table_name)
       @opts['primary_key'].each { |k, v| return v if k == table_name }
       nil
     end
     
+     # Returns the table of a foreign key specified by this Options
     def find_table_by_foreign_key(column_name)
       @opts['foreign_key']['alias'].each { |k, v| return v if k == column_name }
       nil
     end
     
+    # Returns the suffix of a foreign key should have
     def fk_suffix
       @opts['foreign_key']['suffix']
     end
     
+    # Returns the @opts.to_s
     def to_s
       @opts.to_s
     end

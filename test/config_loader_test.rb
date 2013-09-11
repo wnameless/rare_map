@@ -1,4 +1,4 @@
-require 'helper'
+require 'test_helper'
 require 'rare_map/config_loader'
 require 'rare_map/errors'
 

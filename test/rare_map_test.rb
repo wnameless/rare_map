@@ -1,4 +1,4 @@
-require 'helper'
+require 'test_helper'
 
 class RareMapTest < Test::Unit::TestCase
   MiniTest::Unit::TestCase::SUPPORTS_INFO_SIGNAL = nil
