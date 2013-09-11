@@ -63,6 +63,7 @@ module RareMap
     end
     
     private
+    
     def classify_by_table(table, model, models)
       if model.group?
         model = models.find { |m| m.table.name == table &&

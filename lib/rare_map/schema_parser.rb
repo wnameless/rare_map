@@ -73,6 +73,7 @@ module RareMap
     end
     
     private
+    
     def foreign_keys
       ["#{@name}_#{fk_suffix}",      "#{@name}#{fk_suffix}",      "#{singularize}_#{fk_suffix}",
        "#{singularize}#{fk_suffix}", "#{pluralize}_#{fk_suffix}", "#{pluralize}#{fk_suffix}"]

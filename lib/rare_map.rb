@@ -18,7 +18,7 @@ module RareMap
     end
     
     def mapping
-      @db_profiles = load_config @rails_root ? @rails_root + 'config/' : './'
+      @db_profiles = load_config @rails_root ? File.join(@rails_root, 'config') : './'
       @db_profiles.each do |profile|
         profile.schema = read_schema profile
         profile.tables = parse_schema profile.schema
@@ -42,6 +42,7 @@ module RareMap
     end
     
     private
+    
     def generate_demo
       f = File.new('demo.rb', 'w')
       f.write "require 'active_record'\n"

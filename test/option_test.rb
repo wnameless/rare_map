@@ -1,15 +1,16 @@
 require 'helper'
+require 'rare_map/options'
 
-class RareMapTest < Test::Unit::TestCase
+class OptionTest < Test::Unit::TestCase
   MiniTest::Unit::TestCase::SUPPORTS_INFO_SIGNAL = nil
   def run_setup_hooks ; end
   def run_teardown_hooks ; end
   
   def setup
-    @mapper = RareMap::Mapper.new
+    @options = RareMap::Options.new
   end
   
   def test_constructor
-    assert @mapper.kind_of? RareMap::Mapper
+    assert @options.kind_of? RareMap::Options
   end
 end

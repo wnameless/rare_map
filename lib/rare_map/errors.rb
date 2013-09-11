@@ -1,4 +1,5 @@
 module RareMap
-  class ConfigNotFoundError < Exception
+  module Errors
+    class ConfigNotFoundError < Exception ; end
   end
 end

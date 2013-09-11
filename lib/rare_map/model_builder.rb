@@ -1,4 +1,6 @@
 require 'active_support/inflector'
+require 'rare_map/model'
+require 'rare_map/relation'
 
 module RareMap
   module ModelBuilder
@@ -25,6 +27,7 @@ module RareMap
     end
     
     private
+    
     def build_relations(models)
       models.each do |model|
         if model.group?
@@ -94,31 +97,6 @@ module RareMap
     def set_primary_key_by_options(table, options)
       pk = options.find_primary_key_by_table table.name
       table.primary_key = pk if pk
-    end
-  end
-  
-  class Model
-    attr_reader :connection, :table, :group, :relations, :db_name
-    
-    def initialize(connection, table, group = 'default', db_name)
-      @connection, @table, @group, @db_name = connection, table, group, db_name
-      @relations = []
-    end
-    
-    def group?
-      group != 'default'
-    end
-    
-    def classify
-      "#{table.name}".pluralize.classify
-    end
-  end
-  
-  class Relation
-    attr_reader :type, :foreign_key, :table, :through
-    
-    def initialize(type, foreign_key, table, through = nil)
-      @type, @foreign_key, @table, @through = type, foreign_key, table, through
     end
   end
 end
