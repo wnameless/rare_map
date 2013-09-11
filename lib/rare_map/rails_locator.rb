@@ -1,10 +1,13 @@
 module RareMap
   # RareMap::RailsLocator locates the root of a rails application from any
   # where inside it.
+  # @author Wei-Ming Wu
   module RailsLocator
-   # locate_rails_root(path = '.', depth = 5)
-   # path is set default to current folder
-   # depth is set default to 5
+   # Finds the root of a rails application.
+   #
+   # @param [String] path the location where start to search
+   # @param [Integer] depth the max levels of folders to search
+   # @return [String, nil] the root of a rails application
    def locate_rails_root(path = '.', depth = 5)
       rails_dirs = %w(app config db lib log public)
       

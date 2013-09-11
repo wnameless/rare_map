@@ -3,9 +3,11 @@ require 'active_support/core_ext/hash'
 module RareMap
   # RareMap::Options defines all available options of RareMap.
   # @author Wei-Ming Wu
+  # @!attribute [r] opts
+  #   @return [Hash] the details of options
   class Options
+    # A default group name
     DEFAULT_GROUP = 'default'
-    # @return [Hash] the details of options
     attr_reader :opts
     
     # Creates a Options.

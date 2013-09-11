@@ -1,14 +1,17 @@
 module RareMap
   # RareMap::Column defines a column of a database table.
   # @author Wei-Ming Wu
+  # @!attribute [r] name
+  #   @return [String] the name of this Column
+  # @!attribute [r] type
+  #   @return [String] the type of this Column
+  # @!attribute unique
+  #   @return [true, false] the uniqueness of this Column
+  # @!attribute ref_table
+  #   @return [String] the reference table of this Column
   class Column
-    # @return [String] the name of column
-    attr_reader :name
-    # @return [String] the type of column
-    attr_reader :type
-    # @return [True, False] the uniqueness of column
+    attr_reader :name, :type
     attr_accessor :unique
-    # @return [String] the reference table of column
     attr_accessor :ref_table
     
     # Creates a Column.
@@ -16,10 +19,10 @@ module RareMap
     # @param name [String] the name of column
     # @param type [String] the type of column
     # @return [Column] a Column object
-    def initialize(name, type)
+    def initialize(name, type, opts = {})
       @name = name
       @type = type
-      @unique = false
+      @unique = opts[:unique] == true
     end
     
     # Checks if this Column is unique.
