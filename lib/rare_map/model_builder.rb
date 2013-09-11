@@ -90,7 +90,7 @@ module RareMap
     def set_foreign_keys_by_options(table, options)
       table.columns.each do |col|
         ref = options.find_table_by_foreign_key col.name
-        col.references = ref if ref
+        col.ref_table = ref if ref
       end
     end
     

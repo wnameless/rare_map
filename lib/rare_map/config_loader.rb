@@ -30,11 +30,11 @@ module RareMap
           end
         when 'Array'
           v = v.reduce(:merge)
-          group_opts = Options.new(v.delete(OPTS_KEY) || global_opts.opts, k)
+          group_opts = Options.new((v.delete(OPTS_KEY) || global_opts.opts).merge(group: k))
           
           v.each do |db, config|
             if config[OPTS_KEY]
-              db_profiles << DatabaseProfile.new(db, remove_opts(config), Options.new(config[OPTS_KEY], k))
+              db_profiles << DatabaseProfile.new(db, remove_opts(config), Options.new(config[OPTS_KEY].merge(group: k)))
             else
               db_profiles << DatabaseProfile.new(db, config, group_opts)
             end

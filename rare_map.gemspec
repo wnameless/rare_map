@@ -22,9 +22,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activerecord", ">= 3.2.0"
   s.add_runtime_dependency "activesupport", ">= 3.2.0"
   
-  s.add_development_dependency "shoulda", "~> 3.3.2"
   s.add_development_dependency "simplecov"
-  s.add_development_dependency "rdoc", "~> 3.12"
-  s.add_development_dependency "bundler", "~> 1.3"
+  s.add_development_dependency "yard"
+  s.add_development_dependency "bundler"
   s.add_development_dependency "rake"
 end

@@ -2,10 +2,6 @@ require 'test_helper'
 require 'rare_map/rails_locator'
 
 class RailsLocatorTest < Test::Unit::TestCase
-  MiniTest::Unit::TestCase::SUPPORTS_INFO_SIGNAL = nil
-  def run_setup_hooks ; end
-  def run_teardown_hooks ; end
-  
   include RareMap::RailsLocator
   
   def test_locate_rails_root

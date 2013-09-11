@@ -2,10 +2,6 @@ require 'test_helper'
 require 'rare_map/options'
 
 class OptionsTest < Test::Unit::TestCase
-  MiniTest::Unit::TestCase::SUPPORTS_INFO_SIGNAL = nil
-  def run_setup_hooks ; end
-  def run_teardown_hooks ; end
-  
   def setup
     @options = RareMap::Options.new
     @opts = { 'group'       => 'default',
@@ -25,13 +21,13 @@ class OptionsTest < Test::Unit::TestCase
   
   def test_group?
     assert_equal false, @options.group?
-    @options = RareMap::Options.new @opts, 'group1'
+    @options = RareMap::Options.new @opts.merge(group: 'group1')
     assert @options.group?
   end
   
   def test_group
     assert_equal 'default', @options.group
-    @options = RareMap::Options.new @opts, 'group1'
+    @options = RareMap::Options.new @opts.merge(group: 'group1')
     assert_equal 'group1', @options.group
   end
   
@@ -54,9 +50,5 @@ class OptionsTest < Test::Unit::TestCase
     @opts['foreign_key']['suffix'] = 'suffix'
     @options = RareMap::Options.new @opts
     assert_equal 'suffix', @options.fk_suffix
-  end
-  
-  def test_to_s
-    assert_equal @opts.to_s, @options.to_s
   end
 end

@@ -35,7 +35,7 @@ module RareMap
     end
     
     def match_foreign_key(column)
-      if column.references == @name || foreign_keys.include?(column.name)
+      if column.ref_table == @name || foreign_keys.include?(column.name)
         @name if primary_key
       end
     end

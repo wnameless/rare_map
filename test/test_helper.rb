@@ -11,11 +11,14 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'test/unit'
-require 'shoulda'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rare_map'
 
 class Test::Unit::TestCase
+  def run_setup_hooks ; end
+  def run_teardown_hooks ; end
 end
+
+MiniTest::Unit::TestCase::SUPPORTS_INFO_SIGNAL = nil
