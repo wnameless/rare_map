@@ -15,6 +15,7 @@ module RareMap
     # @param raw_opts [Hash] the details of options
     # @return [Options] a Options object
     def initialize(raw_opts = {})
+      raw_opts ||= {}
       raw_opts = raw_opts.with_indifferent_access
       @opts = { group: DEFAULT_GROUP,
                 primary_key: {},

@@ -4,10 +4,18 @@ require 'rare_map/database_profile'
 require 'rare_map/options'
 
 module RareMap
+  # RareMap::ConfigLoader translates a rare_map.yml into DatabaseProfile.
+  # @author Wei-Ming Wu
   module ConfigLoader
-    include Errors
+    # The key of rare map options inside a config YAML.
     OPTS_KEY = 'rare_map_opts'
+    include Errors
     
+    # Translates a rare_map.yaml into an Array of DatabaseProfile.
+    #
+    # @param [String] path the folder which contains the RareMap config
+    # @param [String] file_name the name of the RareMap config
+    # @return [Array] an Array of DatabaseProfile
     def load_config(path, file_name = 'rare_map.yml')
       raise ConfigNotFoundError unless File.exist? File.join(path, file_name)
       config = YAML.load_file File.join(path, file_name)

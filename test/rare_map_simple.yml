@@ -1,0 +1,14 @@
+rare_map_opts:
+  foreign_key:
+    alias:
+      sbj_id: subject
+  primary_key:
+    man: person_id
+
+main:
+  adapter: mysql2
+  host: 127.0.0.1
+  database: test
+  port: 3306
+  username: root
+  password:
