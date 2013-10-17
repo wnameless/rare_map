@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Rare map by wnameless</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/wnameless/rare_map">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/wnameless/rare_map/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/wnameless/rare_map/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Rare map</h1>
+          <p>Translate legacy db to ActiveRecord models</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/wnameless">wnameless</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a name="rare_map" class="anchor" href="#rare_map"><span class="octicon octicon-link"></span></a>rare_map</h1>
+
+<p>Relational db to ActiveREcord models MAPper</p>
+
+<p>RareMap can be used for BOTH standalone application &amp; Rails</p>
+
+<h4>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation:</h4>
+
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="n">install</span> <span class="n">rare_map</span>
+</pre></div>
+
+<h2>
+<a name="basic-raremap-usage" class="anchor" href="#basic-raremap-usage"><span class="octicon octicon-link"></span></a>Basic RareMap Usage</h2>
+
+<h4>
+<a name="standalone" class="anchor" href="#standalone"><span class="octicon octicon-link"></span></a>Standalone:</h4>
+
+<p>Create a new rare_map.yml with following lines in the root of your application</p>
+
+<h4>
+<a name="rails" class="anchor" href="#rails"><span class="octicon octicon-link"></span></a>Rails:</h4>
+
+<p>Create a new config/rare_map.yml with following lines in rails</p>
+
+<p>rare_map.yml:</p>
+
+<div class="highlight highlight-yaml"><pre>  <span class="l-Scalar-Plain">legacy</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite3</span>
+    <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/db1.sqlite3</span>
+
+  <span class="l-Scalar-Plain">old_db</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql2</span>
+    <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+    <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db_name</span>
+    <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">3306</span>
+    <span class="l-Scalar-Plain">username</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user</span>
+    <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">pw</span>
+</pre></div>
+
+<p>Run following command in the root of your application or rails</p>
+
+<pre><code>$ raremap
+</code></pre>
+
+<p>Standalone: A demo.rb example is generated for you in the root of your application</p>
+
+<p>RareMap console which is like rails console for standalone app can be run by following command</p>
+
+<pre><code>$ raremap console  # or simply run `raremap c`
+</code></pre>
+
+<h2>
+<a name="advanced-raremap-usage" class="anchor" href="#advanced-raremap-usage"><span class="octicon octicon-link"></span></a>Advanced RareMap Usage</h2>
+
+<h4>
+<a name="seperate-databases-into-groups-highly-recommended" class="anchor" href="#seperate-databases-into-groups-highly-recommended"><span class="octicon octicon-link"></span></a>Seperate databases into groups (highly recommended)</h4>
+
+<div class="highlight highlight-yaml"><pre>  <span class="l-Scalar-Plain">her_group</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span>
+      <span class="l-Scalar-Plain">db1</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite3</span>
+        <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/db1.sqlite3</span>
+    <span class="p-Indicator">-</span>
+      <span class="l-Scalar-Plain">db2</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite3</span>
+        <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/db1.sqlite3</span>
+
+  <span class="l-Scalar-Plain">his_group</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span>
+      <span class="l-Scalar-Plain">db1</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite3</span>
+        <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/db3.sqlite3</span>
+    <span class="p-Indicator">-</span>
+      <span class="l-Scalar-Plain">db2</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite3</span>
+        <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/db4.sqlite3</span>
+</pre></div>
+
+<p>There are benefits by separating databases into groups:</p>
+
+<ol>
+<li><p>Associations are built between databases within a group</p></li>
+<li><p>Group name is treated as a module namespace</p></li>
+<li><p>Models of a group are organized within a folder</p></li>
+</ol><p>If all your data reside in several legacy databases, it is important to build back those associations across databases</p>
+
+<p>If there are 2 or more tables with the same name, giving them group names could avoid naming collision</p>
+
+<p>If there are tons of tables, it is better to organize them well</p>
+
+<h4>
+<a name="set-up-raremap-options" class="anchor" href="#set-up-raremap-options"><span class="octicon octicon-link"></span></a>Set up RareMap Options</h4>
+
+<div class="highlight highlight-yaml"><pre>  <span class="l-Scalar-Plain">rare_map_opts</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">foreign_key</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">suffix</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">fk</span>
+      <span class="l-Scalar-Plain">alias</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">abnormal_fk1</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">table1</span>
+        <span class="l-Scalar-Plain">abnormal_fk2</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">table2</span>
+    <span class="l-Scalar-Plain">primary_key</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">table1</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">abnormal_pk</span>
+</pre></div>
+
+<ul>
+<li>rare_map_opts[foreign_key][suffix]: If your foreign keys are not ended with 'id', you can specify the suffix you want here</li>
+<li>rare_map_opts[foreign_key][alias]: If naming convention is not followed by some foreign keys, you can list them here</li>
+<li>rare_map_opts[primary_key]: Usually rare_map can identify the primary key of a table, if it fails, please list primary keys here</li>
+</ul><h4>
+<a name="raremap-options-precedence" class="anchor" href="#raremap-options-precedence"><span class="octicon octicon-link"></span></a>RareMap Options Precedence</h4>
+
+<p>You can place rare_map options in 3 ways</p>
+
+<div class="highlight highlight-yaml"><pre>  <span class="l-Scalar-Plain">rare_map_opts</span><span class="p-Indicator">:</span>             <span class="c1"># Global options</span>
+    <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">group1</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span>
+      <span class="l-Scalar-Plain">rare_map_opts</span><span class="p-Indicator">:</span>         <span class="c1"># Group options</span>
+        <span class="l-Scalar-Plain">...</span>
+    <span class="p-Indicator">-</span>
+      <span class="l-Scalar-Plain">db1</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">legacy_db</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite3</span>
+    <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/db.sqlite3</span>
+    <span class="l-Scalar-Plain">rare_map_opts</span><span class="p-Indicator">:</span>           <span class="c1"># DB options</span>
+      <span class="l-Scalar-Plain">...</span>
+</pre></div>
+
+<p>Precedence: DB &gt; Group &gt; Global</p>
+
+<h2>
+<a name="copyright" class="anchor" href="#copyright"><span class="octicon octicon-link"></span></a>Copyright</h2>
+
+<p>Copyright (c) 2013 Wei-Ming Wu. See LICENSE.txt for
+further details.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
