@@ -51,25 +51,25 @@ Advanced RareMap Usage
 
 #### Seperate databases into groups (highly recommended)
 ```yaml
-    her_group:
-      -
-        db1:
-          adapter: sqlite3
-          database: db/db1.sqlite3
-      -
-        db2:
-          adapter: sqlite3
-          database: db/db1.sqlite3
+  her_group:
+    -
+      db1:
+        adapter: sqlite3
+        database: db/db1.sqlite3
+    -
+      db2:
+        adapter: sqlite3
+        database: db/db1.sqlite3
 
-    his_group:
-      -
-        db1:
-          adapter: sqlite3
-          database: db/db3.sqlite3
-      -
-        db2:
-          adapter: sqlite3
-          database: db/db4.sqlite3
+  his_group:
+    -
+      db1:
+        adapter: sqlite3
+        database: db/db3.sqlite3
+    -
+      db2:
+        adapter: sqlite3
+        database: db/db4.sqlite3
 ````
 
 There are benefits by separating databases into groups:
@@ -127,6 +127,6 @@ Precedence: DB > Group > Global
 
 ## Copyright
 
-Copyright (c) 2012 Wei-Ming Wu. See LICENSE.txt for
+Copyright (c) 2013 Wei-Ming Wu. See LICENSE.txt for
 further details.
 
