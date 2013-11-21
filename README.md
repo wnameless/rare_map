@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/rare_map.png)](http://badge.fury.io/rb/rare_map)
+
 rare_map
 =============
 
