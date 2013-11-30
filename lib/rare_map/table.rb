@@ -43,9 +43,9 @@ module RareMap
       
       candidates = @columns.find_all { |col| col.unique }.map { |col| col.name }
       return 'id' if candidates.include? 'id'
-      candidates.find { |c| c =~ eval("/^#{@name}.*id$/") } ||
-      candidates.find { |c| c =~ eval("/^#{singularize}.*id$/") } ||
-      candidates.find { |c| c =~ eval("/^#{pluralize}.*id$/") } ||
+      candidates.find { |c| c =~ eval("/^#{@name}.*id$/i") } ||
+      candidates.find { |c| c =~ eval("/^#{singularize}.*id$/i") } ||
+      candidates.find { |c| c =~ eval("/^#{pluralize}.*id$/i") } ||
       candidates.first
     end
     
@@ -67,7 +67,7 @@ module RareMap
     #
     # @return [String, nil] the name of this Table if given Column matched, nil otherwise
     def match_foreign_key(column)
-      if column.ref_table == @name || foreign_keys.include?(column.name)
+      if column.ref_table == @name || foreign_keys.include?(column.name.downcase)
         @name if primary_key
       end
     end
@@ -76,14 +76,15 @@ module RareMap
     #
     # @return [String, nil] the name of this Table if given primary key matched, nil otherwise
     def match_foreign_key_by_primary_key(pk)
-      @name if foreign_keys.include?(pk) && primary_key
+      @name if foreign_keys.include?(pk.to_s.downcase) && primary_key
     end
     
     private
     
     def foreign_keys
-      ["#{@name}_#{fk_suffix}",      "#{@name}#{fk_suffix}",      "#{singularize}_#{fk_suffix}",
-       "#{singularize}#{fk_suffix}", "#{pluralize}_#{fk_suffix}", "#{pluralize}#{fk_suffix}"]
+      ["#{@name}_#{fk_suffix}",       "#{@name}#{fk_suffix}",
+       "#{singularize}_#{fk_suffix}", "#{singularize}#{fk_suffix}",
+       "#{pluralize}_#{fk_suffix}",   "#{pluralize}#{fk_suffix}"].map(&:downcase)
     end
   end
 end

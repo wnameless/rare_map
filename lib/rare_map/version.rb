@@ -4,7 +4,7 @@ module RareMap
   # The minor version of RareMap
   MINOR = 2
   # The patch version of RareMap
-  PATCH = 0
+  PATCH = 1
   
   # The version of RareMap
   VERSION = [MAJOR, MINOR, PATCH].compact.join('.')

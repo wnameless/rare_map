@@ -44,8 +44,16 @@ class TableTest < Test::Unit::TestCase
     assert_equal nil, @Table.match_foreign_key(RareMap::Column.new('table2_id', 'integer'))
   end
   
+  def test_match_foreign_key_case_insensitively
+     assert_equal 'table1', @Table.match_foreign_key(RareMap::Column.new('Table1_ID', 'integer'))
+  end
+  
   def test_match_foreign_key_by_primary_key
     assert_equal 'table1', @Table.match_foreign_key_by_primary_key('table1_id')
     assert_equal nil, @Table.match_foreign_key_by_primary_key('table2_id')
+  end
+  
+  def test_match_foreign_key_by_primary_key_case_insensitively
+    assert_equal 'table1', @Table.match_foreign_key_by_primary_key('Table1_ID')
   end
 end

@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.summary = "rare_map-#{RareMap::VERSION}"
   
   s.executables = ["raremap"]
-  s.files = Dir["{lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.rdoc"]
+  s.files = Dir["{lib}/**/*"] + ["LICENSE.txt", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_runtime_dependency "activerecord", ">= 3.2.0"
