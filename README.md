@@ -5,7 +5,19 @@ rare_map
 
 Relational db to ActiveREcord models MAPper
 
-RareMap can be used for BOTH standalone application & Rails
+It does the reverse engineering to convert existing databases to ActiveRecord models.
+
+Features:
+
+ 1. Rebuiding assocauations.
+
+ 2. Rebuiding attribute accessors(Optional in Rails 4).
+
+ 3. Providing an interactive console which is like Rails console.
+
+ 4. Table or column names which are out of convention can be matched by configuraiton.
+
+ 5. Can be used for BOTH standalone application & Rails
 
 #### Installation:
 ```ruby
