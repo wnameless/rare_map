@@ -16,6 +16,7 @@ Features:
  3. Providing an interactive console which is like Rails console.
 
  4. Table or column names which are out of convention can be matched by configuraiton.
+    (Plural and singular words are already matched automatically.)
 
  5. Can be used for BOTH standalone application & Rails
 
